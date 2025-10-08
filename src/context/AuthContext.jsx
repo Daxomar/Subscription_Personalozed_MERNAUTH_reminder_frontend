@@ -1,6 +1,10 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import toast from "react-hot-toast";
 
+
+
+
+import { fetchWithAuth } from "../utils/fetchWithAuth";
 import {
   Logout,
   SendVerifyOtp, VerifyAccount, IsAuthenticated, SendResetOtp, ResetPassword,
@@ -15,6 +19,9 @@ import {
 
 
 
+
+
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -22,45 +29,47 @@ export const AuthProvider = ({ children }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
 
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userData, setUserData] = useState(null)
   const [userResData, setUserResData] = useState(false)  // will use this to test it later
 
 
-  //LOL about to make this my source of truth code(pinger), fatherlord forgive me!!
+
+
+
   const getIsUserAuthAndVerified = async () => {
+  try {
+    const res = await fetchWithAuth("/auth/is-auth", {
+      method: 'GET',
+      headers: {
+        "Content-type" : "application/json",
+      }
+    });
 
-    try {
-      const res = await fetch(`${backend_url}/auth/is-Auth`, {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
+    // If request succeeds, token is valid
+    const data = await res;
 
-      console.log(res)
-      const user = await GetUser()
-
-      console.log("USERRRRRRR", user)
-      if (res.ok) {
-        setIsLoggedIn(true);
-        setUserData(user);
-        console.log("User is set to", user)
-
-      }   // okay response meaning the token is valid
-
-
-
-      const data = await res.json()
-      return data.success      //returns true or false if user is really verified
-
-    } catch (error) {
-      console.log(error)
+    if (data.success) {
+      const user = await GetUser();  // Fetch user details only if verified
+      setIsLoggedIn(true);
+      setUserData(user);
+      console.log("User is set to", user);
+      return true;
+    } else {
+      console.log("User is not verified");
+      return false;
     }
 
+  } catch (error) {
+    console.error("Auth check failed:", error.message);
+    setIsLoggedIn(false);
+    setUserData(null);
+    return false;
   }
+};
+
 
 
 
@@ -101,6 +110,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     getIsUserAuthAndVerified();
   }, [])
+
 
 
 

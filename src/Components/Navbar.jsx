@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router'
 import { useAuth } from '../context/AuthContext'
+import { fetchWithAuth } from '../utils/fetchWithAuth'
 import toast from 'react-hot-toast'
 const Navbar = () => {
 
@@ -88,25 +89,31 @@ const Navbar = () => {
 
 
 
+//This is my function as an admin for getting all users using my webapp
+//note to self, i no longer need to include credentials over here, i have integrated it into the fetchWithAuth wrapper
 
-  const myOwnGetUsers = async () => {
-
-    const res = await fetch(`${backend_url}/users`, {
+const myOwnGetUsers = async () => {
+  try {
+    const res = await fetchWithAuth("/users", {
       method: "GET",
-      credentials: "include",
       headers: { "Content-type": "application/json" }
-    })
+    });
 
-    if (!res.ok) {
-      toast.alert(res.message)
-      throw new Error("Unable to get all Users sir")
+   const response = await res; // redundant, but okay for now to keep the pattern clear
+   console.log(response);
+
+    if (response.success) {
+      toast.success("Moved to Admin Panel");
+      navigate("/admin");
+    } else {
+      toast.error(response.message || "Unable to get all Users sir");
+      throw new Error(response.message || "Unable to get all Users sir");
     }
-    const response = await res.json()
-    console.log(response)
-
-    if (response.success) toast.success("Moved to Admin Panel ") ;
-    navigate("/admin")
+  } catch (err) {
+    console.error("myOwnGetUsers error:", err);
+    toast.error(err.message || "Unexpected error occurred");
   }
+};
 
 
 

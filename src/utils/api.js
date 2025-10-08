@@ -1,7 +1,8 @@
 const API_URL = "https://89a22ec05e1f.ngrok-free.app/api/v1/users/me";
 
 
-export const backend_url = process.env.REACT_APP_BACKEND_URL
+export const backend_url=process.env.REACT_APP_BACKEND_URL
+
 // export const authRoute =/api/v1/auth
 // export const subscriptionRoute=/api/v1/subscriptions
 // export const userRoute =/api/v1/users
@@ -143,7 +144,7 @@ export const SendResetOtp = async () => {
 export const ResetPassword = async () => {
   try {
     const payload = {
-      // Add your payload here (probably OTP + new password)
+    
       "otp":"341118",
       "newPassword":"David12345678"
 

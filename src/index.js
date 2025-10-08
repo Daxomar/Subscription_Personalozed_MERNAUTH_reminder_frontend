@@ -2,15 +2,33 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import {BrowserRouter} from "react-router"
+import {BrowserRouter} from "react-router-dom"
 import {Toaster} from "react-hot-toast";
+import { QueryClient , QueryClientProvider } from "@tanstack/react-query";
+
+
 import reportWebVitals from './reportWebVitals';
+
+// 1. Create QueryClient
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: 1000 * 60 * 60, // 1 hour cache
+      staleTime: 1000 * 60 * 5,  // 5 mins fresh
+    },
+  },
+});
+
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    <App />
+     <QueryClientProvider client={queryClient}> 
+      <App />
+    </QueryClientProvider>
     <Toaster/>
     </BrowserRouter>
   </React.StrictMode>
