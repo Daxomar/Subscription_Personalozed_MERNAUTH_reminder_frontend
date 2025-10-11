@@ -11,6 +11,7 @@ import EmailVerify from './Pages/EmailVerify'
 import ResetPassword from './Pages/ResetPassword'
 import ProfilePage from './Pages/ProfilePage'
 import AdminPage from './Pages/AdminPage'
+import Subscription from './Pages/Subscription'
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/email-verify" element = {<EmailVerify/>}/>
         <Route path="/reset-password" element = {<ResetPassword/>}/>
         <Route path="/admin" element = {<AdminPage/>}/>
+        <Route path="/admin/subscriptions" element = {<Subscription/>}/>
       </Routes>
       <ReactQueryDevtools initialIsOpen={false} />
     </div>

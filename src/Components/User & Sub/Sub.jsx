@@ -1,4 +1,5 @@
 import React from 'react'
+import { DeleteSubscription } from '../../utils/api'
 
 const Sub = (prop) => {
     const { subscription } = prop
@@ -34,6 +35,7 @@ const Sub = (prop) => {
                 </div>
 
                 <div className="text-2xl mb-6 font-bold font-serif border-b-2 pb-4 ">{subscription.currency} {subscription.price}</div>
+                <button onClick={()=> DeleteSubscription(subscription._id)}>delete</button>
             </li>
         </div>
     )

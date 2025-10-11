@@ -1,3 +1,8 @@
+import toast from "react-hot-toast";
+import { fetchWithAuth } from "./fetchWithAuth";
+import { deleteWithAuth } from "./deleteWithAuth";
+
+
 const API_URL = "https://89a22ec05e1f.ngrok-free.app/api/v1/users/me";
 
 
@@ -373,28 +378,50 @@ export const UpdateSubscription = async (subscriptionId) => {
   }
 };
 
+// export const DeleteSubscription = async (subscriptionId) => {
+//   try {
+//     const res = await fetch(`${backend_url}/subscriptions/${subscriptionId}`, {
+//       method: 'DELETE',
+//       credentials: 'include',
+//     });
+
+//     if (!res.ok) throw new Error("Delete Subscription request failed!");
+
+//     const response = await res.json();
+//     console.log("Delete Subscription response:", response);
+//     return response;
+//   } catch (error) {
+//     if (error.response) {
+//       console.error("Server error:", error.response.data);
+//     } else {
+//       console.error("Delete Subscription failed:", error.message);
+//     }
+//   }
+// };
+
 export const DeleteSubscription = async (subscriptionId) => {
-  try {
-    const res = await fetch(`${backend_url}/subscriptions/${subscriptionId}`, {
-      method: 'DELETE',
-      credentials: 'include',
-    });
 
-    if (!res.ok) throw new Error("Delete Subscription request failed!");
+const confirmDelete = window.confirm("Are you sure you want to delete this subscription?");
+if (!confirmDelete) return; // stop if user cancels
 
-    const response = await res.json();
-    console.log("Delete Subscription response:", response);
-    return response;
-  } catch (error) {
-    if (error.response) {
-      console.error("Server error:", error.response.data);
-    } else {
-      console.error("Delete Subscription failed:", error.message);
+
+// I specified the METHOD ALREADY IN THE deletewithAuth function
+try {
+  const res = await deleteWithAuth(`/subscriptions/${subscriptionId}`, {
+    headers: {
+      "Content-Type": "application/json"
     }
-  }
-};
+  });
 
+  console.log("Delete Subscription response:", res.data);
+  toast.success("Subscription deleted successfully!");
+  return res.data;
 
+} catch (error) {
+  console.error("Delete Subscription failed:", error.message);
+  toast.error(error.message || "Failed to delete subscription.");
+}
+}
 
 
 

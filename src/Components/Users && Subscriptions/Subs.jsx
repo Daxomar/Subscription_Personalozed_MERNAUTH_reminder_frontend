@@ -1,14 +1,15 @@
 
 import React from "react";
 import Sub from "../User & Sub/Sub";
+import Subscription from "../../Pages/Subscription";
 
-const Users = ({ users = [] }) => {
+const Subs = ({ subscriptions = [] }) => {
   return (
     <div>
-      {users.length > 0 ? (
+      {subscriptions.length > 0 ? (
         <ul className="w-full max-w-6xl">
-          {users.map((user) => (
-            <User key={user._id} user={user} />
+          {subscriptions.map((subscription) => (
+            <Sub key={subscription._id} subscription={subscription} />
           ))}
         </ul>
       ) : (
@@ -18,4 +19,4 @@ const Users = ({ users = [] }) => {
   );
 };
 
-export default Users;
+export default Subs;
