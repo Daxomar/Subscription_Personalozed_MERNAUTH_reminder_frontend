@@ -1,6 +1,7 @@
 import toast from "react-hot-toast";
 import { fetchWithAuth } from "./fetchWithAuth";
 import { deleteWithAuth } from "./deleteWithAuth";
+import { updateWithAuth } from "./updateWithAuth";
 
 
 const API_URL = "https://89a22ec05e1f.ngrok-free.app/api/v1/users/me";
@@ -12,6 +13,7 @@ export const backend_url=process.env.REACT_APP_BACKEND_URL
 // export const subscriptionRoute=/api/v1/subscriptions
 // export const userRoute =/api/v1/users
 
+//I will later move everything and make this the source of truth when i am done
 
 
 export const SendVerifyOtp = async () => {
@@ -343,25 +345,64 @@ export const CreateSubscription = async () => {
 
 
 
-export const UpdateSubscription = async (subscriptionId) => {
-  try {
-    const payload = {
-      "name": "From my froexport const ing 4 promax",
-      "price": 139,
-      "currency": "USD",
-      "frequency": "monthly",
-      "category": "entertainment",
-      "startDate": "2025-08-4",
-      "paymentMethod": "Credit Card"
-    };
+// export const UpdateSubscription = async (subscriptionId) => {
+//   try {
+//     const payload = {
+//       "name": "From my froexport const ing 4 promax",
+//       "price": 139,
+//       "currency": "USD",
+//       "frequency": "monthly",
+//       "category": "entertainment",
+//       "startDate": "2025-08-4",
+//       "paymentMethod": "Credit Card"
+//     };
 
-    const res = await fetch(`${backend_url}/subscriptions/${subscriptionId}`, {
+//     const res = await fetch(`${backend_url}/subscriptions/${subscriptionId}`, {
+//       method: 'PATCH',
+//       credentials: 'include',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(payload)
+//     });
+
+//     if (!res.ok) throw new Error("Update Subscription request failed!");
+
+//     const response = await res.json();
+//     console.log("Update Subscription response:", response);
+//     return response;
+//   } catch (error) {
+//     if (error.response) {
+//       console.error("Server error:", error.response.data);
+//     } else {
+//       console.error("Update Subscription failed:", error.message);
+//     }
+//   }
+// };
+
+
+export const UpdateSubscription = async (subscriptionId, updateData) => {
+  try {
+
+
+    // This is no longer valid lol
+    // const updateData = {
+    //   "name": "From my froexport const ing 4 promax",
+    //   "price": 139,
+    //   "currency": "USD",
+    //   "frequency": "monthly",
+    //   "category": "entertainment",
+    //   "startDate": "2025-08-4",
+    //   "paymentMethod": "Credit Card"
+    // };
+
+    const res = await updateWithAuth(`/subscriptions/${subscriptionId}`, {
       method: 'PATCH',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(updateData)
     });
 
     if (!res.ok) throw new Error("Update Subscription request failed!");
@@ -377,6 +418,18 @@ export const UpdateSubscription = async (subscriptionId) => {
     }
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
 
 // export const DeleteSubscription = async (subscriptionId) => {
 //   try {
