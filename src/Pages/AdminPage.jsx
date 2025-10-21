@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { Waveform } from 'ldrs/react'
+import 'ldrs/react/Waveform.css'
 import { backend_url } from "../utils/api";
 import { useQuery } from "@tanstack/react-query";
 import Users from "../Components/Users && Subscriptions/Users";
@@ -50,7 +52,19 @@ const AdminPage = () => {
   );
 
   // UI states
-  if (isLoading) return <p>Loading users...</p>;
+if (isLoading)
+  return (
+    <div className="flex justify-center items-center h-screen border-2 border-green-500">
+      <Waveform
+        size="150"
+        stroke="10"
+        speed="1"
+        color="blue"
+      />
+    </div>
+  );
+
+
   if (isError) return <p>Failed to load users</p>;
 
   return (

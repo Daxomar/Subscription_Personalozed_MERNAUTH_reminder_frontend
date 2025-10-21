@@ -9,6 +9,7 @@ import SignupForm from './Pages/SignupForm'
 import LoginForm from './Pages/LoginForm'
 import EmailVerify from './Pages/EmailVerify'
 import ResetPassword from './Pages/ResetPassword'
+import Navbar from './Components/Navbar'
 import ProfilePage from './Pages/ProfilePage'
 import AdminPage from './Pages/AdminPage'
 import Subscription from './Pages/Subscription'
@@ -16,13 +17,13 @@ import Subscription from './Pages/Subscription'
 const App = () => {
   return (
     <AuthProvider>
-    <div className="flex flex-col">
-      {/* <button onClick= {() => toast.success("success")} className='btn btn-outline bg-green-500 text-white border-2 border-black'>Click me</button> */}
+      <Navbar />
+    <div className="flex flex-col mt-20">
       <Routes>
         <Route path="/" element = {<HomePage/>}/>
         <Route path="/sign-up" element = {<SignupForm/>}/>
         <Route path="/sign-in" element = {<LoginForm />}/>
-        {/* <Route path="/sign-out" element = {<HomePage/>}/> */}
+    
         <Route path="/email-verify" element = {<EmailVerify/>}/>
         <Route path="/reset-password" element = {<ResetPassword/>}/>
         <Route path="/admin" element = {<AdminPage/>}/>

@@ -7,8 +7,11 @@
 //The makerequest will now hold the object returned when called { ok: res.ok, status: res.status, data }
   const makeRequest = async () => {
     const res = await fetch(fullUrl, {
-      method: "PATCH",
+    //   method: "PATCH",  //Removed PATCH from here the req method will now be in options
       credentials: "include",
+      headers: {
+        'Content-Type': 'application/json',
+      },
       ...options,
     });
 

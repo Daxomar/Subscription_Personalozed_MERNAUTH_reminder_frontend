@@ -121,7 +121,8 @@ const myOwnGetUsers = async () => {
 
   console.log("DATAAAAAA", userData);
   return (
-    <div className=' w-full flex justify-between items-center p-4 sm:p-6 sm:px-24 absolute top-0'>
+    // <div className=' w-full flex justify-between items-center p-4 sm:p-6 sm:px-24 absolute top-0 border-2'>
+    <div className=' fixed top-0 left-0 w-full z-50 flex justify-between bg-white items-center p-4 sm:p-6 sm:px-24  border-2 '>
       <img src={assets.logo} alt="Logo Image" className="w-22 sm:w-32" />
       {userData ?
         (<div className='w-8 h-8 flex justify-center items-center rounded-full bg-black text-white relative group'>

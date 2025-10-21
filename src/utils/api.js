@@ -308,24 +308,59 @@ export const GetAllSubscriptionsByAdmin = async () =>{
 }
 
 
-export const CreateSubscription = async () => {
-  try {
-    const payload = {
-   "name": "From my froexport const ing 4 promax",
-   "price": 139,
-   "currency": "USD",
-   "frequency": "monthly",
-   "category": "entertainment",
-   "startDate": "2025-08-4",
-   "paymentMethod": "Credit Card"
-}
+// export const CreateSubscription = async () => {
+//   try {
+//     const payload = {
+//    "name": "From my froexport const ing 4 promax",
+//    "price": 139,
+//    "currency": "USD",
+//    "frequency": "monthly",
+//    "category": "entertainment",
+//    "startDate": "2025-08-4",
+//    "paymentMethod": "Credit Card"
+// }
 
-    const res = await fetch(`${backend_url}/subscriptions/`, {
+//     const res = await fetch(`${backend_url}/subscriptions/`, {
+//       method: 'POST',
+//       credentials: 'include',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(payload)
+//     });
+
+//     if (!res.ok) throw new Error("Create Subscription request failed!");
+
+//     const response = await res.json();
+//     console.log("Create Subscription response:", response);
+//     return response;
+//   } catch (error) {
+//     if (error.response) {
+//       console.error("Server error:", error.response.data);
+//     } else {
+//       console.error("Create Subscription failed:", error.message);
+//     }
+//   }
+// };
+
+
+
+
+
+export const CreateSubscription = async (payload) => {
+  try {
+  //   const payload = {
+  //  "name": "From my froexport const ing 4 promax",
+  //  "price": 139,
+  //  "currency": "USD",
+  //  "frequency": "monthly",
+  //  "category": "entertainment",
+  //  "startDate": "2025-08-4",
+  //  "paymentMethod": "Credit Card"
+// }
+
+    const res = await updateWithAuth(`/subscriptions/`, {
       method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify(payload)
     });
 
@@ -342,6 +377,17 @@ export const CreateSubscription = async () => {
     }
   }
 };
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -398,21 +444,17 @@ export const UpdateSubscription = async (subscriptionId, updateData) => {
 
     const res = await updateWithAuth(`/subscriptions/${subscriptionId}`, {
       method: 'PATCH',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify(updateData)
     });
 
     if (!res.ok) throw new Error("Update Subscription request failed!");
 
-    const response = await res.json();
-    console.log("Update Subscription response:", response);
-    return response;
+    
+    console.log("Update Subscription response:", res);
+    return res.data;
   } catch (error) {
-    if (error.response) {
-      console.error("Server error:", error.response.data);
+    if (error.res) {
+      console.error("Server error:", error.res.data);
     } else {
       console.error("Update Subscription failed:", error.message);
     }
