@@ -26,8 +26,12 @@ const Navbar = () => {
 
       // if the return message is success, then clear loggedin state and userData  
       if (response.success) {
-        setIsLoggedIn(false)
-        setUserData(false)
+       setIsLoggedIn(false)
+       setUserData(null);
+       sessionStorage.removeItem("userData");
+       sessionStorage.removeItem("isLoggedIn");
+
+
         navigate("/")
         toast.success("Logout Successful, See you later");
       }
@@ -123,7 +127,7 @@ const myOwnGetUsers = async () => {
   return (
     // <div className=' w-full flex justify-between items-center p-4 sm:p-6 sm:px-24 absolute top-0 border-2'>
     <div className=' fixed top-0 left-0 w-full z-50 flex justify-between bg-white items-center p-4 sm:p-6 sm:px-24  border-2 '>
-      <img src={assets.logo} alt="Logo Image" className="w-22 sm:w-32" />
+      <img src={assets.logo2} alt="Logo Image" className="w-20 sm:w-24" />
       {userData ?
         (<div className='w-8 h-8 flex justify-center items-center rounded-full bg-black text-white relative group'>
           {userData.name[0].toUpperCase()}

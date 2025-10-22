@@ -55,6 +55,14 @@ export const AuthProvider = ({ children }) => {
       const user = await GetUser();  // Fetch user details only if verified
       setIsLoggedIn(true);
       setUserData(user);
+
+
+        // Sync with session storage  //this also happens in my frontend login
+        sessionStorage.setItem('userData', JSON.stringify(user));
+        sessionStorage.setItem('isLoggedIn', 'true');
+        console.log("✅ User validated & updated:", user);
+
+
       console.log("User is set to", user);
       return true;
     } else {
@@ -75,41 +83,27 @@ export const AuthProvider = ({ children }) => {
 
 
 
-
-
-  //   const getUserData = async () =>{
-  //     console.log("getUserData called!");
-
-
-  // //   
-  //     try{
-  //         const res = await fetch('https://89a22ec05e1f.ngrok-free.app/api/v1/users/me', {
-  //           method: 'GET',
-  //           credentials: 'include',
-  //           headers: {
-  //             'Content-Type': 'application/json',
-  //           }
-  //         })
-
-  //         if(!res.ok) throw new Error("Failed to fetch user data")
-  //         const data = await res.json()
-  //         console.log(data)
-  //         if(data.success){
-  //             setIsLoggedIn(true)
-  //             setUserData(data.data.user)
-  //         }
-
-  //     }catch(error){
-  //         console.log(error)
-  //     }
-  // }
-
-
-
-
   useEffect(() => {
+
+     // Step 1: Restore session if user already stored
+    const storedUser = sessionStorage.getItem("userData");
+
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUserData(parsedUser);
+      setIsLoggedIn(true);
+      console.log("Restored user from session:", parsedUser);
+    }
+
+    // Step 2: Always revalidate in the background
     getIsUserAuthAndVerified();
   }, [])
+
+
+
+
+
+
 
 
 

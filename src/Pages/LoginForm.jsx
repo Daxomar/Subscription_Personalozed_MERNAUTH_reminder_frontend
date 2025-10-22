@@ -68,8 +68,14 @@ const LoginForm = () => {
             navigate("/");
             setName('');
             setUserData(user)
-            setPassword('');
-            setEmail('')
+
+
+            // Cache in sessionStorage
+             sessionStorage.setItem('isLoggedIn', 'true');
+             sessionStorage.setItem('userData', JSON.stringify(user));
+
+                setPassword('');
+                setEmail('')
 
 
         } catch (err) {
